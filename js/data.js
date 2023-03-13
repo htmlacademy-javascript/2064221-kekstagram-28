@@ -1,9 +1,11 @@
-export const PHOTO_COUNT = 25;
-export const AVATAR_COUNT = 6;
-export const MIN_LIKE_COUNT = 15;
-export const MAX_LIKE_COUNT = 200;
-export const COMMENT_COUNT = 17;
-export const NAMES = [
+import {getRandomArrayElement, generateCommentId, getRandomInteger} from './utils.js';
+
+const PHOTO_COUNT = 25;
+const AVATAR_COUNT = 6;
+const MIN_LIKE_COUNT = 15;
+const MAX_LIKE_COUNT = 200;
+const COMMENT_COUNT = 17;
+const NAMES = [
   'Иван',
   'Юлия',
   'Игорь',
@@ -15,7 +17,7 @@ export const NAMES = [
 ];
 
 
-export const MESSAGES = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -24,7 +26,7 @@ export const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-export const DESCRIPTIONS = [
+const DESCRIPTIONS = [
   'Остаюсь верен традициям – воскресное селфи',
   'Мыслями на пляже.',
   'Жизнь слишком коротка для плохого настроения.',
@@ -35,3 +37,34 @@ export const DESCRIPTIONS = [
   'На календаре четверг воспоминаний. Если оставите комментарий, я на вас подпишусь',
   'У всех есть такой друг…',
 ];
+
+const createMessage = () => Array.from({ length: getRandomInteger(1, 2) }, () =>
+  getRandomArrayElement(MESSAGES)).join(' ');
+
+const createComment = () => ({
+  id: generateCommentId(),
+  avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
+  message: createMessage(),
+  name: getRandomArrayElement(NAMES),
+});
+
+
+const createPhoto = (id) => ({
+  id,
+  url: `photos/${getRandomInteger(1, PHOTO_COUNT)}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(MIN_LIKE_COUNT, MAX_LIKE_COUNT),
+  comments: Array.from(
+    { length: getRandomInteger(0, COMMENT_COUNT) },
+    createComment
+  ),
+});
+
+const getPhoto = () =>
+  Array.from({ length: PHOTO_COUNT }, (_, photoIndex) =>
+    createPhoto(photoIndex + 1)
+  );
+
+getPhoto();
+
+export {getPhoto};
