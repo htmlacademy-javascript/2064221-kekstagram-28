@@ -5,14 +5,13 @@ const commentTemplate = document.querySelector('#comments')
 
 const bigPicture = document.querySelector('.big-picture');
 const commentsList = document.querySelector('.social__comments');
-const elementListCopy = commentsList.querySelector('.social__comment');
 
-const renderComments = (newComment) => {
+const renderComments = (newComments) => {
   commentsList.innerHTML = '';
   const commentFragment = document.createDocumentFragment();
 
-  newComment.forEach(({ avatar, name, message }) => {
-    const comment = elementListCopy.cloneNode(true);
+  newComments.forEach(({ avatar, name, message }) => {
+    const comment = commentTemplate.cloneNode(true);
     comment.querySelector('.social__picture').src = avatar;
     comment.querySelector('.social__picture').alt = name;
     comment.querySelector('.social__text').textContent = message;
@@ -29,13 +28,8 @@ const renderPicturesDetals = ({ url, description, likes, comments }) => {
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
 
-  const commentElement = commentTemplate.cloneNode(true);
-  commentElement.querySelector('.social__picture').src = comments[0].avatar;
-  commentElement.querySelector('.social__picture').alt = comments[0].name;
-  commentElement.querySelector('.social__text').textContent = comments[0].message;
-
-  commentsList.appendChild(commentElement);
   renderComments(comments);
 };
 
 export { isEscapeKey, renderPicturesDetals };
+
