@@ -1,29 +1,14 @@
-import { getPhoto } from './data.js';
-import { isEscapeKey, renderPicturesDetals} from './big-picture.js';
+import { isEscapeKey, renderPicturesDetals } from './big-picture.js';
 
 
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const container = document.querySelector('.pictures');
-const miniaturePictures = getPhoto();
 const fragment = document.createDocumentFragment();
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 
-
-miniaturePictures.forEach(({ url, description, likes, comments, id }) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureElement.querySelector('.picture__img').alt = description;
-  pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  pictureElement.dataset.pictureElementId = id;
-
-  fragment.appendChild(pictureElement);
-});
-
-container.appendChild(fragment);
 
 const bigPictureOpenElement = document.querySelector('.big-picture');
 const bigPictureCloseElement = bigPictureOpenElement.querySelector('.big-picture__cancel');
@@ -41,11 +26,26 @@ const renderGallery = (pictures) => {
     if (!picture) {
       return;
     }
+    evt.preventDefault();
+
     const photo = pictures.find(
       (item) => item.id === + picture.dataset.pictureElementId
     );
     openBigPicture(photo);
   });
+
+  const miniaturePictures = (pictures);
+  miniaturePictures.forEach(({ url, description, likes, comments, id }) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__img').alt = description;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    pictureElement.dataset.pictureElementId = id;
+
+    fragment.appendChild(pictureElement);
+  });
+  container.appendChild(fragment);
 };
 
 function openBigPicture(photo) {
@@ -68,4 +68,4 @@ bigPictureCloseElement.addEventListener('click', () => {
   closeBigPicture();
 });
 
-export { pictureTemplate, renderGallery };
+export { pictureTemplate, renderGallery, onDocumentKeydown };
