@@ -1,3 +1,6 @@
+import {resetScale} from './scale.js';
+import {resetEffects} from './effects.js';
+
 const imgForm = document.querySelector('.img-upload__form');
 const loadForm = imgForm.querySelector('.img-upload__overlay');
 const openButton = imgForm.querySelector('#upload-file');
@@ -54,6 +57,8 @@ const showModal = () => {
 const hideModal = () => {
   imgForm.reset();
   pristine.reset();
+  resetScale();
+  resetEffects();
   loadForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
