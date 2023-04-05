@@ -1,4 +1,4 @@
-import { isEscapeKey, renderPicturesDetals } from './big-picture.js';
+import { isEscapeKey, renderPicturesDetals, renderShowComments } from './big-picture.js';
 
 
 const pictureTemplate = document.querySelector('#picture')
@@ -55,10 +55,12 @@ function openBigPicture(photo) {
   commentsLoader.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   renderPicturesDetals(photo);
+  renderShowComments();
 }
 
 function closeBigPicture() {
   bigPictureOpenElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onDocumentKeydown);
 }
