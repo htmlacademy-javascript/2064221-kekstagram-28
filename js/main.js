@@ -5,6 +5,5 @@ import { getPhoto } from './data.js';
 import { renderGallery } from './pictures.js';
 import './form.js';
 import './scale.js';
-import './effects.js';
 
 renderGallery(getPhoto());
