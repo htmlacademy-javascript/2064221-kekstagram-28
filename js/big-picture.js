@@ -7,25 +7,21 @@ const bigPicture = document.querySelector('.big-picture');
 const commentsList = document.querySelector('.social__comments');
 
 const commentsLoader = document.querySelector('.comments-loader');
-const commentCount = document.querySelector('.social__comment-count');
+const commentContent = document.querySelector('.comments-show');
+const commemtAllContent = document.querySelector('.comments-count');
+
 
 const COMMENTS_TO_SHOW = 5;
 let commentsShow = 0;
 let currentComments = [];
 
-const renderComments = (newComments) => {
-  commentsList.innerHTML = '';
-  const commentFragment = document.createDocumentFragment();
+const renderComment = (newComment) => {
+  const comment = commentTemplate.cloneNode(true);
+  comment.querySelector('.social__picture').src = newComment.avatar;
+  comment.querySelector('.social__picture').alt = newComment.name;
+  comment.querySelector('.social__text').textContent = newComment.message;
 
-  newComments.forEach(({ avatar, name, message }) => {
-    const comment = commentTemplate.cloneNode(true);
-    comment.querySelector('.social__picture').src = avatar;
-    comment.querySelector('.social__picture').alt = name;
-    comment.querySelector('.social__text').textContent = message;
-
-    commentFragment.appendChild(comment);
-  });
-  commentsList.appendChild(commentFragment);
+  return comment;
 };
 
 const renderShowComments = () => {
@@ -40,14 +36,16 @@ const renderShowComments = () => {
 
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShow; i++) {
-    const commentElement = renderComments(currentComments[i]);
+    const commentElement = renderComment(currentComments[i]);
     fragment.append(commentElement);
   }
 
   commentsList.innerHTML = '';
   commentsList.append(fragment);
-  commentCount.innerHTML = `${commentsShow} из <span class = "comments-count">${currentComments.length}</span> комментариев`;
+  commentContent.textContent = commentsShow;
+  commemtAllContent.textContent = currentComments.length;
 };
+
 
 const onCommentsLoaderButtonClick = () => renderShowComments();
 commentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
@@ -59,7 +57,8 @@ const renderPicturesDetals = ({ url, description, likes, comments }) => {
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
   currentComments = comments;
-  renderComments(comments);
+  commentsShow = 0;
+  renderShowComments(comments);
 };
 
 

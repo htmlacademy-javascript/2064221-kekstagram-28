@@ -1,4 +1,4 @@
-import { isEscapeKey, renderPicturesDetals, renderShowComments } from './big-picture.js';
+import { isEscapeKey, renderPicturesDetals } from './big-picture.js';
 
 
 const pictureTemplate = document.querySelector('#picture')
@@ -6,7 +6,6 @@ const pictureTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 const container = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
-const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 
 
@@ -51,11 +50,9 @@ const renderGallery = (pictures) => {
 function openBigPicture(photo) {
   bigPictureOpenElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   renderPicturesDetals(photo);
-  renderShowComments();
 }
 
 function closeBigPicture() {
