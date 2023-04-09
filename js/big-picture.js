@@ -62,5 +62,5 @@ const renderPicturesDetals = ({ url, description, likes, comments }) => {
 };
 
 
-export { isEscapeKey, renderPicturesDetals, renderShowComments };
+export { isEscapeKey, renderPicturesDetals };
 
