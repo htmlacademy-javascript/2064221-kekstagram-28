@@ -1,5 +1,5 @@
-import {resetScale} from './scale.js';
-import {resetEffects} from './effects.js';
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const imgForm = document.querySelector('.img-upload__form');
 const loadForm = imgForm.querySelector('.img-upload__overlay');
@@ -10,6 +10,12 @@ const commentInput = imgForm.querySelector('.text__description');
 const hashteg = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_LENGTH = 20;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
+const submitButton = imgForm.querySelector('.img-upload__submit');
+
+const SubmitButtonText = {
+  IDLE: 'Опупликовать',
+  SENDING: 'Загружаем...'
+};
 
 const isValidTag = (tag) => hashteg.test(tag);
 const isValidCount = (tags) => tags.length <= MAX_HASHTAG_LENGTH;
@@ -19,9 +25,9 @@ const isTextFieldFocuced = () =>
   document.activeElement === commentInput;
 
 const pristine = new Pristine(imgForm, {
-  classTo:'img-upload__field-wrapper',
-  errorTextParent:'img-upload__field-wrapper',
-  errorTextClass:'img-upload__field-wrapper__error',
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper__error',
 });
 
 const uniqueTags = (tags) => {
@@ -47,6 +53,29 @@ imgForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
 });
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setOnFormSubmit = (cb) => {
+  imgForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(imgForm));
+      unblockSubmitButton();
+    }
+  });
+};
+
 
 const showModal = () => {
   loadForm.classList.remove('hidden');
@@ -80,3 +109,4 @@ openButton.addEventListener('change', showModal);
 closeButton.addEventListener('click', hideModal);
 imgForm.addEventListener('submit', onFormSubmit);
 
+export { hideModal, setOnFormSubmit };

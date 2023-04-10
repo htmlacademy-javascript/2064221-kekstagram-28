@@ -70,4 +70,4 @@ const getPhoto = () =>
 
 getPhoto();
 
-export {getPhoto, createComment};
+export {getPhoto};
