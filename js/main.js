@@ -1,5 +1,4 @@
 import './utils.js';
-import './data.js';
 import './pictures.js';
 import { renderGallery } from './pictures.js';
 import './form.js';

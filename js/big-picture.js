@@ -1,4 +1,4 @@
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const COMMENTS_TO_SHOW = 5;
 const commentTemplate = document.querySelector('#comments')
   .content
   .querySelector('.social__comment');
@@ -10,8 +10,6 @@ const commentsLoader = document.querySelector('.comments-loader');
 const commentContent = document.querySelector('.comments-show');
 const commemtAllContent = document.querySelector('.comments-count');
 
-
-const COMMENTS_TO_SHOW = 5;
 let commentsShow = 0;
 let currentComments = [];
 
@@ -46,9 +44,8 @@ const renderShowComments = () => {
   commemtAllContent.textContent = currentComments.length;
 };
 
-
 const onCommentsLoaderButtonClick = () => renderShowComments();
-commentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
+
 
 const renderPicturesDetals = ({ url, description, likes, comments }) => {
   bigPicture.querySelector('.big-picture__img img').src = url;
@@ -61,6 +58,7 @@ const renderPicturesDetals = ({ url, description, likes, comments }) => {
   renderShowComments(comments);
 };
 
+commentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
 
-export { isEscapeKey, renderPicturesDetals };
+export { renderPicturesDetals };
 
