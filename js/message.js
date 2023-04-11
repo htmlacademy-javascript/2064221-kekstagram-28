@@ -12,8 +12,8 @@ function showSuccessMessage() {
   body.appendChild(successMessage);
   const successButton = document.querySelector('.success__button');
   function closeSuccessMessage() {
-    const oldSuccessMessage = document.querySelector('.success');
-    oldSuccessMessage.remove();
+    const onSuccessMessageClose = document.querySelector('.success');
+    onSuccessMessageClose.remove();
   }
   successButton.addEventListener('click', closeSuccessMessage);
   document.addEventListener('keydown', (evt) => {
@@ -27,7 +27,6 @@ function showSuccessMessage() {
       closeSuccessMessage();
     }
   });
-
 }
 
 function showErrorMessage() {
@@ -35,8 +34,8 @@ function showErrorMessage() {
   body.appendChild(errorMessage);
   const errorButton = document.querySelector('.error__button');
   function closeErrorMessage() {
-    const oldErrorMessage = document.querySelector('.error');
-    oldErrorMessage.remove();
+    const onErrorMessageClose = document.querySelector('.error');
+    onErrorMessageClose.remove();
   }
   errorButton.addEventListener('click', closeErrorMessage);
   document.addEventListener('keydown', (evt) => {

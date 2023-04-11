@@ -13,7 +13,7 @@ const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги
 const submitButton = imgForm.querySelector('.img-upload__submit');
 
 const SubmitButtonText = {
-  IDLE: 'Опупликовать',
+  IDLE: 'Опубликовать',
   SENDING: 'Загружаем...'
 };
 

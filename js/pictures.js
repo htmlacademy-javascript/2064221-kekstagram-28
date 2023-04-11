@@ -65,4 +65,4 @@ bigPictureCloseElement.addEventListener('click', () => {
   closeBigPicture();
 });
 
-export { pictureTemplate, renderGallery, onDocumentKeydown };
+export { pictureTemplate, renderGallery, onDocumentKeydown, };
