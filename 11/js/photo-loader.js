@@ -1,7 +1,7 @@
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const fileChooser = document.querySelector('.img-upload__wrapper input[type=file]');
 const preview = document.querySelector('.img-upload__preview img');
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 fileChooser.addEventListener('change', () => {
   const file = fileChooser.files[0];

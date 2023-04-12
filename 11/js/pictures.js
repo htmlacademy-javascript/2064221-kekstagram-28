@@ -1,4 +1,5 @@
-import { isEscapeKey, renderPicturesDetals } from './big-picture.js';
+import { renderPicturesDetals } from './big-picture.js';
+import { isEscapeKey } from './utils.js';
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
