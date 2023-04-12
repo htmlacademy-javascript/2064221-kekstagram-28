@@ -1,4 +1,4 @@
-import { isEscapeKey } from './big-picture.js';
+import { isEscapeKey } from './utils.js';
 const body = document.querySelector('body');
 const successTemplateFragment = document.querySelector('#success')
   .content
@@ -7,49 +7,50 @@ const errorTemplateFragment = document.querySelector('#error')
   .content
   .querySelector('.error');
 
-function showSuccessMessage() {
+const showSuccessMessage = () => {
   const successMessage = successTemplateFragment.cloneNode(true);
   body.appendChild(successMessage);
   const successButton = document.querySelector('.success__button');
-  function closeSuccessMessage() {
-    const oldSuccessMessage = document.querySelector('.success');
-    oldSuccessMessage.remove();
-  }
-  successButton.addEventListener('click', closeSuccessMessage);
+  const onСloseSuccessMessage = () => {
+    const onSuccessMessageClose = document.querySelector('.success');
+    onSuccessMessageClose.remove();
+  };
+
+  successButton.addEventListener('click', onСloseSuccessMessage);
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      closeSuccessMessage();
+      onСloseSuccessMessage();
     }
   });
   document.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('success')) {
-      closeSuccessMessage();
+      onСloseSuccessMessage();
     }
   });
+};
 
-}
-
-function showErrorMessage() {
+const showErrorMessage = () => {
   const errorMessage = errorTemplateFragment.cloneNode(true);
   body.appendChild(errorMessage);
   const errorButton = document.querySelector('.error__button');
-  function closeErrorMessage() {
-    const oldErrorMessage = document.querySelector('.error');
-    oldErrorMessage.remove();
-  }
-  errorButton.addEventListener('click', closeErrorMessage);
+  const onСloseErrorMessage = () => {
+    const onErrorMessageClose = document.querySelector('.error');
+    onErrorMessageClose.remove();
+  };
+
+  errorButton.addEventListener('click', onСloseErrorMessage);
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      closeErrorMessage();
+      onСloseErrorMessage();
     }
   });
   document.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('error')) {
-      closeErrorMessage();
+      onСloseErrorMessage();
     }
   });
-}
+};
 
 export { showSuccessMessage, showErrorMessage };
