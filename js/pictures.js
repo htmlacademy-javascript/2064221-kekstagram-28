@@ -1,4 +1,5 @@
-import { renderPicturesDetals } from './big-picture.js';
+import { renderPicturesDetals} from './big-picture.js';
+import { onDocumentKeydown } from './form.js';
 import { isEscapeKey } from './utils.js';
 const pictureTemplate = document.querySelector('#picture')
   .content
@@ -9,12 +10,6 @@ const commentsLoader = document.querySelector('.comments-loader');
 const bigPictureOpenElement = document.querySelector('.big-picture');
 const bigPictureCloseElement = bigPictureOpenElement.querySelector('.big-picture__cancel');
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeBigPicture([0]);
-  }
-};
 
 const renderGallery = (pictures) => {
   const miniaturePictures = pictures;
@@ -42,10 +37,11 @@ const renderGallery = (pictures) => {
     const photo = pictures.find(
       (item) => item.id === + picture.dataset.pictureElementId
     );
+    if (!photo) {
+      return;
+    }
     openBigPicture(photo);
   });
-
-
   container.appendChild(fragment);
 };
 
@@ -60,7 +56,12 @@ function openBigPicture(photo) {
 function closeBigPicture() {
   bigPictureOpenElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeBigPicture();
+    }
+  });
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -69,4 +70,4 @@ bigPictureCloseElement.addEventListener('click', () => {
   closeBigPicture();
 });
 
-export { pictureTemplate, renderGallery, onDocumentKeydown };
+export { pictureTemplate, renderGallery};
