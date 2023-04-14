@@ -1,4 +1,5 @@
 import { isEscapeKey } from './utils.js';
+import { onDocumentKeydown } from './form.js';
 const body = document.querySelector('body');
 const successTemplateFragment = document.querySelector('#success')
   .content
@@ -35,20 +36,27 @@ const showErrorMessage = () => {
   body.appendChild(errorMessage);
   const errorButton = document.querySelector('.error__button');
   const onСloseErrorMessage = () => {
-    const onErrorMessageClose = document.querySelector('.error');
-    onErrorMessageClose.remove();
+    const errorText = document.querySelector('.error');
+    if (errorText) {
+      errorText.remove();
+    }
+  };
+
+  const closeErrorMessage = () => {
+    onСloseErrorMessage();
   };
 
   errorButton.addEventListener('click', onСloseErrorMessage);
+  document.removeEventListener('keydown', onDocumentKeydown);
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      onСloseErrorMessage();
+      closeErrorMessage();
     }
   });
   document.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('error')) {
-      onСloseErrorMessage();
+      closeErrorMessage();
     }
   });
 };

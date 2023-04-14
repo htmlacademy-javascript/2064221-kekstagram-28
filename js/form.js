@@ -1,5 +1,6 @@
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
+import { isEscapeKey } from './utils.js';
 
 const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_LENGTH = 20;
@@ -84,7 +85,7 @@ const hideModal = () => {
 };
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isTextFieldFocuced()) {
+  if (isEscapeKey(evt) && !isTextFieldFocuced()) {
     evt.preventDefault();
     hideModal();
   }
@@ -110,4 +111,4 @@ openButton.addEventListener('change', showModal);
 closeButton.addEventListener('click', hideModal);
 imgForm.addEventListener('submit', onFormSubmit);
 
-export { hideModal, setOnFormSubmit };
+export { hideModal, setOnFormSubmit, onDocumentKeydown };
