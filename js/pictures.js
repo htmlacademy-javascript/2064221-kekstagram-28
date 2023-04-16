@@ -67,6 +67,12 @@ function closeBigPicture() {
 
 
 bigPictureCloseElement.addEventListener('click', () => {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeBigPicture();
+    }
+  });
   closeBigPicture();
 });
 

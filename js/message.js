@@ -13,8 +13,10 @@ const showSuccessMessage = () => {
   body.appendChild(successMessage);
   const successButton = document.querySelector('.success__button');
   const onСloseSuccessMessage = () => {
-    const onSuccessMessageClose = document.querySelector('.success');
-    onSuccessMessageClose.remove();
+    const successText = document.querySelector('.success');
+    if (successText) {
+      successText.remove();
+    }
   };
 
   successButton.addEventListener('click', onСloseSuccessMessage);
