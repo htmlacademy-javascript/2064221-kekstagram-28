@@ -1,5 +1,4 @@
 import { renderPicturesDetals} from './big-picture.js';
-import { onDocumentKeydown } from './form.js';
 import { isEscapeKey } from './utils.js';
 const pictureTemplate = document.querySelector('#picture')
   .content
@@ -12,6 +11,9 @@ const bigPictureCloseElement = bigPictureOpenElement.querySelector('.big-picture
 
 
 const renderGallery = (pictures) => {
+  container.querySelectorAll('.picture').forEach((element) => {
+    element.remove();
+  });
   const miniaturePictures = pictures;
   miniaturePictures.forEach(({ url, description, likes, comments, id }) => {
     const pictureElement = pictureTemplate.cloneNode(true);
@@ -20,12 +22,9 @@ const renderGallery = (pictures) => {
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     pictureElement.dataset.pictureElementId = id;
-
-    container.querySelectorAll('.picture').forEach((element) => {
-      element.remove();
-    });
     fragment.appendChild(pictureElement);
   });
+
 
   container.addEventListener('click', (evt) => {
     const picture = evt.target.closest('[data-picture-element-id]');
@@ -45,6 +44,12 @@ const renderGallery = (pictures) => {
   container.appendChild(fragment);
 };
 
+function onDocumentKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    closeBigPicture();
+  }
+}
+
 function openBigPicture(photo) {
   bigPictureOpenElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -56,12 +61,6 @@ function openBigPicture(photo) {
 function closeBigPicture() {
   bigPictureOpenElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeBigPicture();
-    }
-  });
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 

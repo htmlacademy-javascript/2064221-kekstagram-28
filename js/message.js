@@ -8,57 +8,68 @@ const errorTemplateFragment = document.querySelector('#error')
   .content
   .querySelector('.error');
 
+const closeSuccessMessage = () => {
+  const successText = document.querySelector('.success');
+  if (successText) {
+    successText.remove();
+  }
+  document.removeEventListener('keydown', onDocumentMessageKeydown);
+  document.removeEventListener('click', onDocumentClick);
+};
+
+const onCloseSuccessMessage = () => {
+  closeSuccessMessage();
+};
+
 const showSuccessMessage = () => {
   const successMessage = successTemplateFragment.cloneNode(true);
   body.appendChild(successMessage);
   const successButton = document.querySelector('.success__button');
-  const onСloseSuccessMessage = () => {
-    const onSuccessMessageClose = document.querySelector('.success');
-    onSuccessMessageClose.remove();
-  };
 
-  successButton.addEventListener('click', onСloseSuccessMessage);
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      onСloseSuccessMessage();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('success')) {
-      onСloseSuccessMessage();
-    }
-  });
+  successButton.addEventListener('click', onCloseSuccessMessage);
+  document.addEventListener('keydown', onDocumentMessageKeydown);
+  document.addEventListener('click', onDocumentClick);
+};
+
+
+const closeErrorMessage = () => {
+  const errorText = document.querySelector('.error');
+  if (errorText) {
+    errorText.remove();
+  }
+  document.removeEventListener('keydown', onDocumentMessageKeydown);
+  document.removeEventListener('click', onDocumentClick);
+  document.addEventListener('keydown', onDocumentKeydown); //возвращаем обработчик закрытия формы
+
+};
+
+const onCloseErrorMessage = () => {
+  closeErrorMessage();
 };
 
 const showErrorMessage = () => {
   const errorMessage = errorTemplateFragment.cloneNode(true);
   body.appendChild(errorMessage);
   const errorButton = document.querySelector('.error__button');
-  const onСloseErrorMessage = () => {
-    const errorText = document.querySelector('.error');
-    if (errorText) {
-      errorText.remove();
-    }
-  };
 
-  const closeErrorMessage = () => {
-    onСloseErrorMessage();
-  };
-
-  errorButton.addEventListener('click', onСloseErrorMessage);
-  document.removeEventListener('keydown', onDocumentKeydown);
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeErrorMessage();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('error')) {
-      closeErrorMessage();
-    }
-  });
+  errorButton.addEventListener('click', onCloseErrorMessage);
+  document.addEventListener('keydown', onDocumentMessageKeydown);
+  document.addEventListener('click', onDocumentClick);
+  document.removeEventListener('keydown', onDocumentKeydown); //снимаем на время обработчик закрытия формы
 };
+
+function onDocumentMessageKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeErrorMessage();
+    closeSuccessMessage();
+  }
+}
+function onDocumentClick(evt) {
+  if (evt.target.classList.contains('error')) {
+    closeErrorMessage();
+    closeSuccessMessage();
+  }
+}
 
 export { showSuccessMessage, showErrorMessage };
