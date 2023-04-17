@@ -15,7 +15,6 @@ const closeSuccessMessage = () => {
   }
   document.removeEventListener('keydown', onDocumentMessageKeydown);
   document.removeEventListener('click', onDocumentClick);
-  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const onCloseSuccessMessage = () => {
@@ -30,7 +29,6 @@ const showSuccessMessage = () => {
   successButton.addEventListener('click', onCloseSuccessMessage);
   document.addEventListener('keydown', onDocumentMessageKeydown);
   document.addEventListener('click', onDocumentClick);
-  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 
